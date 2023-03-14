@@ -17,8 +17,8 @@ namespace SortItOut
 
             if (name != "mods")
             {
-                Console.WriteLine("ERROR\nTHIS EXE MUST BE IN MODS FOLDER!!!");
-                Console.WriteLine("\nPress any key or close the window to exit.");
+                Console.WriteLine("ERROR\nTHIS EXE MUST BE IN MODS FOLDER!!!\nPress any key or close the window to exit.");
+                //Console.WriteLine("\nPress any key or close the window to exit.");
                 Console.ReadKey();
             }
             else
