@@ -26,14 +26,6 @@ namespace SortItOut
                 {
                     foreach (var folder in dirs)
                     {
-                        if (folder.Name == "animation_events" || folder.Name == "ui_extension")
-                        {
-                            ml.WriteLine(folder);
-                            Console.WriteLine($"[{num++}] Added as priority  \t - <{folder}>");
-                        }
-                    }
-                    foreach (var folder in dirs)
-                    {
                         if (folder.Name == "base" || folder.Name == "dmf" || folder.Name == "animation_events" || folder.Name == "ui_extension")
                         {
                             //Console.WriteLine($"[-] Skipped\t\t - <{folder}>");
@@ -41,7 +33,15 @@ namespace SortItOut
                         else
                         {
                             ml.WriteLine(folder);
-                            Console.WriteLine($"[{num++}] Added  \t\t - <{folder}>");
+                            Console.WriteLine($"[{num++}] Added  \t\t\t - <{folder}>");
+                        }
+                    }
+                    foreach (var folder in dirs)
+                    {
+                        if (folder.Name == "animation_events" || folder.Name == "ui_extension")
+                        {
+                            ml.WriteLine(folder);
+                            Console.WriteLine($"[{num++}] Added as priority  \t - <{folder}>");
                         }
                     }
                 }
