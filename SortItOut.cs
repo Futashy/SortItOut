@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SortItOut
 {
@@ -10,10 +12,28 @@ namespace SortItOut
             string dir = Directory.GetCurrentDirectory();
             string file = (dir + @"\mod_load_order.txt");
             DirectoryInfo di = new DirectoryInfo(dir);
-            DirectoryInfo[] dirs = di.GetDirectories(); // Is there a way to convert it to regular Array or work with it like one?
+            DirectoryInfo[] dirs = di.GetDirectories();
             string name = new DirectoryInfo(dir).Name;
-
+            List<string> list = new List<string>(); // just found out there's was a list, and it's better for this kinda tasks than array, hooray!
             int num = 1;
+
+            //-----------------------------------------------------------------------------------------------------------------------------//
+
+            
+
+            foreach (var folder in dirs)
+            {
+                if (folder.Name != "base" & folder.Name != "dmf")
+                {
+                    list.Add(folder.Name);
+                }
+            }
+
+            if (list.Contains("animation_events") && list.Contains("ui_extension"))
+            {
+                list.Remove("animation_events"); list.Add("animation_events"); // pushes it to the end of the list
+                list.Remove("ui_extension"); list.Add("ui_extension"); // same again
+            }
 
             if (name != "mods")
             {
@@ -22,33 +42,18 @@ namespace SortItOut
             }
             else
             {
-                using (StreamWriter ml = File.CreateText(file)) // Hate to use spaghetti code but whatever ¯\_(ツ)_/¯
+                using (StreamWriter ml = new StreamWriter(file))
                 {
-                    foreach (var folder in dirs)
+                    foreach (var item in list) // should be done in for loop, but who cares anyway?
                     {
-                        if (folder.Name == "base" || folder.Name == "dmf" || folder.Name == "animation_events" || folder.Name == "ui_extension")
-                        {
-                            //Console.WriteLine($"[-] Skipped\t\t - <{folder}>");
-                        }
-                        else
-                        {
-                            ml.WriteLine(folder);
-                            Console.WriteLine($"[{num++}] Added  \t\t\t - <{folder}>");
-                        }
-                    }
-                    foreach (var folder in dirs)
-                    {
-                        if (folder.Name == "animation_events" || folder.Name == "ui_extension")
-                        {
-                            ml.WriteLine(folder);
-                            Console.WriteLine($"[{num++}] Added as priority  \t - <{folder}>");
-                        }
+                        ml.WriteLine(item);
+                        Console.WriteLine($"[{num++}] Added  \t\t\t - <{item}>");
                     }
                 }
-
-                Console.WriteLine("\nSorting completed!\n\nPress any key or close the window to exit.");
-                Console.ReadKey();
             }
+
+            Console.WriteLine("\nSorting completed!\n\nPress any key or close the window to exit.");
+                Console.ReadKey();
         }
     }
 }
